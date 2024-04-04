@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8"> <!-- definiert das Zeichensatzformat der Seite, damit alle Zeichen richtig dargestellt werden -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Definiert die Ansichtsgröße der Seite auf mobilen Geräten -->
+    <title>Kleider machen Menschen</title> <!-- Titel der Seite -->
+    
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> <!-- Verknüpfung mit Materialize CSS -->
+    <link rel="icon" type="image/png" href="logo5.png"> <!-- Favicon für die Seite -->
+
+
+    <!-- Style-Block CSS (hier mussten diverse zusätzliche Formatierungen vorgenommen werden, 
+        damit die Seite trotz dem materialize stylesheet wie gewünscht dargestellt wird) -->
+    <style>
+
+
+/* Header */
+header {
+    background-color: #b8f0de; /* Hintergrundfarbe des Headers */
+    color: #fff; /* Textfarbe des Headers */
+    padding: 25px; /* Innenabstand des Headers */
+    position: relative; /* Position relativ für das Logo */   
+}
+
+/* Logo (zusätzliche Formatierungen nötig, da sich das Logo auf kleineren Geräten dem header anpassen soll */
+.logo {
+    position: absolute; /* Position absolut für das Logo */
+    top: 50%; /* Vertikale Zentrierung des Logos */
+    transform: translateY(-50%); /* wird verwendet, um das Logo um 50% seiner eigenen Höhe nach oben zu verschieben. 
+                                    In Kombination mit der Positionierung des Logos mit position: absolute; und top: 50%; 
+                                    bewirkt dies eine vertikale Zentrierung des Logos innerhalb seines übergeordneten Elements, in diesem Fall des Headers.*/
+    left: 1px; /* Abstand von rechts für das Logo */
+    max-height: 100%; /* Maximale Höhe des Logos entspricht der Höhe des Headers */
+    width: auto; /* Breite automatisch anpassen */
+}
+
+/*Der Hintergrund der Navigationselemente*/
+header nav {
+    background-color: #e6ba21; /* Hintergrundfarbe der Navigation */
+}
+
+/* Navigation-Stile */
+header nav ul {
+    display: flex; /* Anzeige der Navigationselemente als Flexbox, da die Formatierungen sonst nicht umgesetzt werden konnten*/
+    background-color: #e6ba21; /* Hintergrundfarbe der Navigation */
+    justify-content: center; /* Zentriert die Navigationselemente horizontal */
+}
+
+/*Hauptbereich Formatierungen*/
+body {
+    font-family: 'Roboto', sans-serif; /* definiert Schrift unabhängig von Browser oder Benutzereinstellungen */
+    margin: 0; /* Kein Außenabstand für den Body */
+    padding: 0; /* Kein Innenabstand für den Body */
+    color: #212121; /* Textfarbe des Body */
+    text-align: center; /* Zentriert den gesamten Text im Body */
+}
+
+main {
+    padding: 20px; /* Innenabstand für den Hauptbereich */
+}
+
+/* Footer Bereich */
+footer {
+    background-color: #e6ba21;  /* Hintergrundfarbe des Footers */
+    color: #fff; /* Textfarbe des Footers */
+    padding: 15px; /* Innenabstand für den Footer */
+    text-align: center; /* Zentriert den Text im Footer */
+}
+
+/*Media Queries mussten etwas mehr definiert werden, da in der Praxis die Smartphone-Variante mit 767px nicht zu gebrauchen war.
+
+/* Media Query für Tablets */
+@media screen and (max-width: 1024px) {
+}
+
+/* offizielle Media Query für Smartphones */
+@media screen and (max-width: 767px) {
+}
+
+/* Media Query für Smartphones kleiner als 625px */
+@media screen and (max-width: 625px) {
+    header {
+        padding: 10px;
+    }
+    .logo {
+        max-height: 65px; /* maximale Höhe des Logos */
+    }
+}
+/* Media Query für die Darstellung auf klassischen Handybildschirmen (ca. 400px) */
+@media screen and (max-width: 500px) {
+    .logo {
+        display: none; /* Versteckt das Logo, um die Navigation auf kleinen Bildschirmen uneingeschränkt darzustellen */
+    }
+}
+    </style>
+    
+    
+</head>
+<body>
+
+    <!-- Header mit Navigation -->
+    <header>
+        <img src="logo5.png" alt="Logo" class="logo"> <!-- Logo der Seite -->
+
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Startseite</a></li> <!-- Link zur Startseite -->
+                <li><a href="ueber-uns.html">Über uns</a></li> <!-- Link zur "Über uns"-Seite -->
+                <li><a href="kleiderspende.html">Kleiderspende</a></li> <!-- Link zur Kleiderspende-Seite -->
+                <li><a href="kontakt.html">Kontakt</a></li> <!-- Link zur Kontakt-Seite -->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main-Bereich mit Begrüssungstext -->
+    <main>
+        <h2>Willkommen bei Kleider machen Menschen!</h2> <!-- Überschrift für den Begrüssungstext -->
+        <p>Wir sammeln Kleiderspenden für Menschen in Not.</p> <!-- Text für die Begrüssung -->
+        
+    </main>
+
+    <!-- Footer mit rechtlichem Hinweise -->
+    <footer>
+        <p>&copy; 2024 Verein Kleider machen Menschen</p> <!-- Urheberrechtlicher Hinweis im Footer -->
+    </footer>
+
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> <!-- Verknüpfung mit Materialize JavaScript (an der Stelle nicht verwendet) -->
+
+</body>
+</html>
