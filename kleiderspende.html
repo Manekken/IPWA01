@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="icon" type="image/png" href="logo5.png">
     
+    <!-- Moment.js Bibliothek einbinden um Datum und Uhrzeit in der Bestätigung zurück zu geben -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
     <style>
 
@@ -19,7 +21,6 @@
             color: #fff;
             padding: 25px;
             position: relative; /* Position relativ für das Logo */
-            
         }
         
         /* Logo-Stile */
@@ -31,16 +32,14 @@
             max-height: 100%; /* Maximale Höhe des Logos entspricht der Höhe des Headers */
             width: auto; /* Breite automatisch anpassen */
         }
-        header nav {
-            position: flex;  
-            background-color: #e6ba21
-        }
-       
+
+        /* Navigationsbereich im Header, inkl. Schrift anpassen */
         header nav ul {
             display: flex;
             background-color: #e6ba21;
             justify-content: center;
         }
+
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -51,27 +50,35 @@
         
         main {
             padding: 20px;
+            text-align: center; /* Zentriert den Inhalt horizontal */
         }
-
+        /* Formatierungen für den Rahmen um das Formular */
         .kleiderspende-form {
-        width: 66.66%; /* 2/3 der Seitenbreite */
-        margin: 0 auto; /* Zentriert das Formular horizontal */
-        border: 1px solid #000; /* Fügt dem Formular einen Rahmen hinzu */
-        padding: 20px; /* Fügt Innenabstand zum Formular hinzu */
-        flex-direction: column; /* Elemente werden in einer Spalte angeordnet */
-        align-items: center; /* Zentriert die Elemente vertikal */
+            width: 66.66%; /* 2/3 der Seitenbreite */
+            margin: 0 auto; /* Zentriert das Formular horizontal */
+            border: 1px solid #000; /* Fügt dem Formular einen Rahmen hinzu */
+            padding: 20px; /* Fügt Innenabstand zum Formular hinzu */
+            flex-direction: column; /* Elemente werden in einer Spalte angeordnet */
+            align-items: center; /* Zentriert die Elemente vertikal */
         }
-
-        .kleiderspende-form label {
-        width: 100%; /* Füllt die gesamte Breite der Formularspalte aus */
-        margin-bottom: 20px;
-        }
-
+        
+        /* für den aktuellen Code ist nur der input[type="text"]-Teil relevant*/
         .kleiderspende-form select, 
         .kleiderspende-form input[type="text"],
+        .kleiderspende-form input[type="date"],
+        .kleiderspende-form input[type="time"],
         .kleiderspende-form button {
-        width: 100%; /* Füllt die gesamte Breite der Formularspalte aus */
-        text-align: center; /* Zentriert den Text horizontal */
+            width: 100%; /* Füllt die gesamte Breite der Formularspalte aus */
+            text-align: center; /* Zentriert die Eingabe horizontal */
+        }
+
+        /* Um Datum und Zeit durch den User wählen zu lassen, müssen diese Eingabefelder speziell formatiert werden.
+        Dies gestaltete sich schweierig, da das materialize Framework dazwischenspielt. Die Lösung war eine Herausforderung,
+        darum lasse ich sie als Gedächnisstütze drin auch wenn die Funktion im aktuellen Code nicht relevant ist */
+        .kleiderspende-form input[type="date"],
+        .kleiderspende-form input[type="time"] {
+            width: calc(100% - 50%); /* Breite des Elements verringern (optisch beste Lösung aufgrund des materialize Frameworks) */
+            margin-right: 2.5%; /*die beiden Elemente mussten etwas nach Rechts korriert werden, da sie sonst nicht mittig dargestellt wurden*/
         }
 
         footer {
@@ -83,10 +90,18 @@
         
 /* Media Query für Tablets */
 @media screen and (max-width: 1024px) {
+    .kleiderspende-form input[type="date"],
+        .kleiderspende-form input[type="time"] {
+            width: calc(100% - 50%); /* Breite des Elements verringern (optisch beste Lösung aufgrund des materialize Frameworks) */
+            margin-right: 4%;}
 }
 
 /* offizielle Media Query für Smartphones */
 @media screen and (max-width: 767px) {
+    .kleiderspende-form input[type="date"],
+        .kleiderspende-form input[type="time"] {
+            width: calc(100% - 50%); /* Breite des Elements verringern (optisch beste Lösung aufgrund des materialize Frameworks) */
+            margin-right: 5%;}
 }
 
 /* Media Query für Smartphones kleiner als 625px */
@@ -97,6 +112,11 @@
     .logo {
         max-height: 65px; /* maximale Höhe des Logos */
     }
+    .kleiderspende-form input[type="date"],
+        .kleiderspende-form input[type="time"] {
+            width: calc(100% - 50%); /* Breite des Elements verringern (optisch beste Lösung aufgrund des materialize Frameworks) */
+            margin-right: 7%;
+        }
 }
 /* Media Query für die Darstellung auf klassischen Handybildschirmen (ca. 400px) */
 @media screen and (max-width: 500px) {
@@ -129,29 +149,56 @@
         
         <!-- Formular zur Registrierung einer Kleiderspende -->
         <form id="kleiderspendeForm" class="kleiderspende-form">
-
+    
             <!-- Label und Dropdown-Menü für den Übergabeort -->
-            <label for="option">Übergabeort:</label>
-            <select id="option" name="option" required>
+            <label for="übergabeort">Übergabeort:</label>
+            <select id="übergabeort" name="übergabeort" required>
                 <!-- Optionen für den Übergabeort -->
+                <option value="wählen" selected>Übergabeort wählen</option>
                 <option value="geschaeftsstelle">Übergabe an der Geschäftsstelle</option>
-                <option value="abholung" selected>Abholung</option>
+                <option value="abholung">Abholung</option>
             </select><br>
            
-            <!-- Label und Texteingabefeld für die Abholadresse -->
-            <label for="adresse">Abholadresse:</label>
-            <input type="text" id="adresse" name="adresse" required><br>
+            <!-- Kasten für zusätzliche Angaben bei Abholung -->
+            <div id="abholungDetails" style="display: none;">
+                <!-- Label und Texteingabefeld für den Namen -->
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
     
+                <label for="vorname">Vorname:</label>
+                <input type="text" id="vorname" name="vorname" required><br>
+    
+                <label for="strasse">Straße:</label>
+                <input type="text" id="strasse" name="strasse" required><br>
+
+                <label for="plz">PLZ:</label>
+                <input type="text" id="plz" name="plz" required><br>
+    
+                <label for="plz_ort">Ort:</label>
+                <input type="text" id="ort" name="ort" required><br>
+            </div>
+    
+            <!-- alternative zur automatischen Datum/Zeitausgabe mittels Framewokr.
+            kann angepasst werden, um zB das gewünschte Abholdatum noch zu erfassen. 
+            
+            <label for="datum">Datum:</label>
+            <input type="date" id="datum" name="datum"><br>
+            
+            <label for="uhrzeit">Uhrzeit:</label>
+            <input type="time" id="uhrzeit" name="uhrzeit"><br>
+            -->
+            
             <!-- Label und Dropdown-Menü für das Krisengebiet -->
             <label for="krisengebiet">Krisengebiet:</label>
             <select id="krisengebiet" name="krisengebiet" required>
                 <!-- Optionen für das Krisengebiet -->
+                <option value="Krisengebiet wählen" selected>Krisengebiet wählen</option>
                 <option value="Syrien">Syrien</option>
                 <option value="Jemen">Jemen</option>
                 <option value="Afghanistan">Afghanistan</option>
                 <option value="Ukraine">Ukraine</option>
             </select><br>
-
+    
             <!-- Label und Texteingabefeld für die Art der Kleidung -->
             <label for="art">Art der Kleidung:</label>
             <input type="text" id="art" name="art" required><br>
@@ -160,6 +207,7 @@
             <button class="btn waves-effect waves-light" type="submit">Registrieren</button>
         </form>
     </main>
+    
 
     <!-- Footer mit rechtlichem Hinweis -->
     <footer>
@@ -171,51 +219,113 @@
 
     <!-- JavaScript -->
     <script>
-        // Funktion zum Ein- und Ausschalten der Abholadresse je nach gewähltem Übergabeort
-        function toggleAbholadresse(option) {
-            const abholadresseInput = document.getElementById('adresse');
-            if (option === 'geschaeftsstelle') {
-                abholadresseInput.disabled = true;
-            } else {
-                abholadresseInput.disabled = false;
-            }
-        }
+
+    // Funktion zum Ein- und Ausschalten der zusätzlichen Abholadresse je nach gewähltem Übergabeort
+    // Ist notwendig, um den Block der zusätzlichen Angaben bei "Abholung" nicht nur ein- und auszublenden, sondern auch seine Funktion zu deaktivieren, damit die Felder keine Eingabe erwarten, um die Registrastion abzuschliessen
+    // Sieht jetzt logisch aus, war aber ein riesen Aufwand, um auf diese Lösung zu kommen. 
+    function toggleAbholadresse(übergabeort) {
+    const abholadresseDetails = document.getElementById("abholungDetails");
+    const nameInput = document.getElementById('name');
+    const vornameInput = document.getElementById('vorname');
+    const strasseInput = document.getElementById('strasse');
+    const plzInput = document.getElementById('plz');
+    const ortInput = document.getElementById('ort');
+
+    if (übergabeort === "abholung") {
+        abholadresseDetails.style.display = "block";
+        nameInput.disabled = false;
+        vornameInput.disabled = false;
+        strasseInput.disabled = false;
+        plzInput.disabled = false;
+        ortInput.disabled = false;
+    } else if (übergabeort === "geschaeftsstelle") {
+        abholadresseDetails.style.display = "none";
+        nameInput.disabled = true;
+        vornameInput.disabled = true;
+        strasseInput.disabled = true;
+        plzInput.disabled = true;
+        ortInput.disabled = true;
+    }
+}
     
         // Ereignislistener für das DOMContentLoaded-Ereignis
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener("DOMContentLoaded", function() {
             // Initialisierung der Materialize JavaScript-Komponenten
             M.AutoInit();
     
             // Ereignislistener für Änderungen im Dropdown-Menü für den Übergabeort
-            document.getElementById('option').addEventListener('change', function() {
+            document.getElementById("übergabeort").addEventListener("change", function() {
                 const selectedOption = this.value;
                 toggleAbholadresse(selectedOption);
             });
         });
+
+        // Eventlistener hinzufügen, um die PLZ zu prüfen
+        document.getElementById('plz').addEventListener('change', überprüfeAbholort);
+        // ich verwendet das chanche-Event, da es beim input-Event oft bereits beim anklicken des Feldes die Fehlermeldung ausgelöst hat.
+        // (ich vermute aufgrund der autocomplete-Funktion des Browsers)
+
+        // Funktion zum Überprüfen der Abholort-PLZ
+        function überprüfeAbholort() {
+            const plzInput = document.getElementById('plz').value; // PLZ-Feld
+
+        // Überprüfe, ob die ersten beiden Ziffern übereinstimmen
+            if (plzInput.substring(0, 2) !== "30") {
+                alert("Abholort zu weit entfernt");
+            }
+        }
+        // Funktion, um das aktuelle Datum und die aktuelle Uhrzeit abzurufen.
+        function aktuellesDatumUndUhrzeit() {
+        const jetzt = moment(); // Moment.js-Objekt
+
+        // Datum und Uhrzeit in der Bestätigungsnachricht anzeigen
+        return `Datum: ${jetzt.format('DD.MM.YYYY')} Uhrzeit: ${jetzt.format('HH:mm')}`;
+        }
     
         // Ereignislistener für das Absenden des Formulars
-        document.getElementById('kleiderspendeForm').addEventListener('submit', function(event) {
+        document.getElementById("kleiderspendeForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Verhindert das Standardverhalten des Absendens
             const formData = new FormData(this); // FormData-Objekt für die Formulardaten
             const art = formData.get("art"); // Abrufen der Art der Kleidung aus den Formulardaten
-            const adresse = formData.get("adresse"); // Abrufen der Adresse aus den Formulardaten
             const krisengebiet = formData.get("krisengebiet"); // Abrufen des Krisengebiets aus den Formulardaten
-            const option = formData.get("option"); // Abrufen des Übergabeorts aus den Formulardaten
-            
-            // Erstellen der Bestätigungsnachricht für die Kleiderspende
+            const übergabeort = formData.get("übergabeort"); // Abrufen des Übergabeorts aus den Formulardaten
+            const name = formData.get("name"); // Abrufen des Namens aus den Formulardaten
+            const vorname = formData.get("vorname"); // Abrufen des Vornamens aus den Formulardaten
+            const strasse = formData.get("strasse"); // Abrufen der Straße aus den Formulardaten
+            const plz = formData.get("plz"); // Abrufen der PLZ aus den Formulardaten
+            const ort = formData.get("ort"); // Abrufen des Ortes aus den Formulardaten
+
+            // const datum = formData.get("datum");     Abrufen des Datums aus den Formulardaten, insofern dies aktiv ist
+            // const uhrzeit = formData.get("uhrzeit"); Abrufen der Uhrzeit aus den Formulardaten, insofern dies aktiv ist
+    
+
+            // Erstellen der Bestätigungsnachricht für die Kleiderspende, abhängig vom gewählten übergabeort
             const confirmationMessage = `
-                <h2>Vielen Dank für Ihre Spende!</h2>
-                <p>Art der Kleidung: ${art}</p>
-                <p>${option === "geschaeftsstelle" ? "Übergabe an der Geschäftsstelle" : "Abholung"}</p>
-                ${option === "geschaeftsstelle" ? "" : `<p>Abholadresse: ${adresse}</p>`}
-                <p>Krisengebiet: ${krisengebiet}</p>
+            <h2>Vielen Dank für Ihre Spende!</h2>${aktuellesDatumUndUhrzeit()}
+            <p>Art der Kleidung: ${art}</p>
+            <p>${übergabeort === "geschaeftsstelle" ? "Übergabe an der Geschäftsstelle" : "Abholung"}</p>
+            ${übergabeort === "geschaeftsstelle" ? "" : `
+                <div>
+                    <p>Name: ${name}</p>
+                    <p>Vorname: ${vorname}</p>
+                    <p>Straße: ${strasse}</p>
+                    <p>PLZ: ${plz}</p>
+                    <p>Ort: ${ort}</p>
+                </div>
+                `}
+            <p>Krisengebiet: ${krisengebiet}</p>
+
             `;
+
+            // <p>Datum: ${datum}</p>       Könnte noch in die Message integriert werden.
+            // <p>Uhrzeit: ${uhrzeit}</p>   Könnte noch in die Message integriert werden.
             
+    
             // Einfügen der Bestätigungsnachricht in das Formular
             document.getElementById('kleiderspendeForm').innerHTML = confirmationMessage;
         });
-    </script>
 
+    </script>
     
 
 </body>
